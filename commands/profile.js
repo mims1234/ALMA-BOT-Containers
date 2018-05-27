@@ -6,7 +6,7 @@ module.exports.run = async (bot,message,args) => {
     
     //Intitlization 
     //let newProfile = new Set();
-    user = JSON.parse(fs.readFileSync("./SUI.json","utf8"));
+    User = JSON.parse(fs.readFileSync("./SUI.json","utf8"));
     let messageArray = message.content.split(' ');
 
     // 1)Compare if USER_EXIST
@@ -18,7 +18,7 @@ module.exports.run = async (bot,message,args) => {
         if(user_id === null)
         {
             var ref = firebase.database().ref('users/database')
-            messageJSON = user['USER'];
+            messageJSON = User['USER'];
             var payload1 = {}
             var payload = {}
             var message = messageJSON
@@ -38,35 +38,66 @@ module.exports.run = async (bot,message,args) => {
             Linfo = info.toLowerCase();
             switch(Linfo)
             {
-                case 'paints':
-                                    if(info2 === 'common'||info2 === 'uncommon'||info2 === 'rare'||info2 === 'epic'||info2 === 'legendary'||info2 === 'artefact')
-                                    {Display_paints(info2);}
-                                    else
-                                    {   return message.channel.send('Please Mention which Category : \n\n`Common`\n`Uncommon`\n`Rare`\n`Epic`\n`Legendary`\n`Artefact`')}
+                case 'paints':  user = message.author
+                                spaminterval = 1
+                                    if (user.dspam) {
+                                        if (new Date().getTime() - user.dspam < spaminterval*1000) {
+                                            message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.dspam) / 1000) * 100) / 100) + ' seconds')
+                                            .then(msg => msg.delete(2000));
+                                            setTimeout(function(){
+                                                message.delete();
+                                            },1000)
+                                            return;
+                                        }
+                                        else { user.dspam = new Date().getTime();
+                                            Display_paints(info2);}
+                                    }
+                                    else { user.dspam = new Date().getTime();
+                                        Display_paints(info2);}
+       
                 break;
-                case 'containers':Display_containers();
+                case 'preview': var info3 = messageArray[3];
+                                if(!info3 || info3 === ' ') return message.channel.send('<paint_name> was missing !?\n\n `a$profile preview <type> <paint_name>`')
+                                var Ninfo3 = info3.toLowerCase()
+                                var Linfo3 = info3[0].toUpperCase()+Ninfo3.slice(1);
+                                user = message.author
+                                spaminterval = 1
+                                    if (user.cspam) {
+                                        if (new Date().getTime() - user.cspam < spaminterval*1000) {
+                                            message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.cspam) / 1000) * 100) / 100) + ' seconds')
+                                            .then(msg => msg.delete(2000));
+                                            setTimeout(function(){
+                                                message.delete();
+                                            },1000)
+                                            return;
+                                        }
+                                        else { user.cspam = new Date().getTime();
+                                            Preview_paints(info2,Linfo3);}
+                                    }
+                                    else { user.cspam = new Date().getTime();
+                                        Preview_paints(info2,Linfo3);}
+
                 break;
-                default:
-                        let user = message.author
-                        let spaminterval = 30
-                            if (user.bspam) {
-                                if (new Date().getTime() - user.bspam < spaminterval*1000) {
-                                    message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.bspam) / 1000) * 100) / 100) + ' seconds')
-                                    .then(msg => msg.delete(2000));
-                                    setTimeout(function(){
-                                        message.delete();
-                                    },1000)
-                                    return;
-                                }
-                                else { user.bspam = new Date().getTime();
-                                    Display_profile();}
+                default:user = message.author
+                        spaminterval = 30
+                        //if(info2) return message.channel.send('Command : `a$profile`<-(~No Spaces)~')
+                        if (user.bspam) {
+                            if (new Date().getTime() - user.bspam < spaminterval*1000) {
+                                message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.bspam) / 1000) * 100) / 100) + ' seconds')
+                                .then(msg => msg.delete(2000));
+                                setTimeout(function(){
+                                    message.delete();
+                                },1000)
+                                return;
                             }
                             else { user.bspam = new Date().getTime();
                                 Display_profile();}
+                        }
+                        else { user.bspam = new Date().getTime();
+                            Display_profile();}
             }
         },2000);
     
-
 //Functiosns
 
     function Display_profile()
@@ -124,59 +155,120 @@ module.exports.run = async (bot,message,args) => {
 
     function Display_paints(code)
     {
-        if(!code) return message.channel.send('Type Not mentioned')
-        category = code.toLowerCase();
+        if(code === 'common'||code === 'uncommon'||code === 'rare'||code === 'epic'||code === 'legendary'||code === 'artefact')
+        {
+            if(!code) return message.channel.send('Type Not mentioned')
 
-        if(category === 'common') num = 61, cat ='C' ;
-        if(category === 'uncommon') num = 12, cat ='U';
-        if(category === 'rare') num = 10, cat ='R';
-        if(category === 'epic') num = 2, cat ='E';
-        if(category === 'legendary') num = 2, cat ='L';
-        if(category === 'artefact') num = 0, cat ='A';
+            if(code === 'common') num = 61, cat ='C' ;
+            if(code === 'uncommon') num = 12, cat ='U';
+            if(code === 'rare') num = 10, cat ='R';
+            if(code === 'epic') num = 2, cat ='E';
+            if(code === 'legendary') num = 2, cat ='L';
+            if(code === 'artefact') num = 0, cat ='A';
 
-   
-        Lcat = cat.toLowerCase();
+    
+            Lcat = cat.toLowerCase();
 
-        var c = [];
-        var d = [];
-        j=1;
-        var UserPaintRef = firebase.database().ref('users/database/'+Current_User)
-        UserPaintRef.once('value',function(snap){
+            var c = [];
+            var d = [];
+            j=1;
+            var UserPaintRef = firebase.database().ref('users/database/'+Current_User)
+            UserPaintRef.once('value',function(snap){
 
-            for(var i=1;i<=num;i++)
-            {
-                var a = snap.child('paints/'+cat+'/'+Lcat+i).val()
-                var b = Lcat+i;
-                if(a>=1)
+                for(var i=1;i<=num;i++)
                 {
-                    c[j] = a
-                    d[j] = b
-                    j=j+1;
-                }
-            }
-            var name = [],URL = [],amount = [];
-            //console.log(d)
-            setTimeout(function(){
-                var PaintRef = firebase.database().ref('paints/database/')
-                PaintRef.once('value',function(snap){
-                    for(j=1;j<=(d.length-1);j++)
+                    var a = snap.child('paints/'+cat+'/'+Lcat+i).val()
+                    var b = Lcat+i;
+                    if(a>=1)
                     {
-                        name[j] = snap.child(cat+'/'+d[j]+'/name').val();
-                        URL[j] = snap.child(cat+'/'+d[j]+'/URL').val();
-                        amount[j] = c[j];
+                        c[j] = a
+                        d[j] = b
+                        j=j+1;
                     }
-                    // message.channel.send('message')
-                    msg = `Type : ${category}\n`
-                    for(var i=1;i<=name.length-1;i++)
+                }
+                var name = [],URL = [],amount = [];
+                //console.log(d)
+                setTimeout(function(){
+                    var PaintRef = firebase.database().ref('paints/database/')
+                    PaintRef.once('value',function(snap){
+                        for(j=1;j<=(d.length-1);j++)
+                        {
+                            name[j] = snap.child(cat+'/'+d[j]+'/name').val();
+                            URL[j] = snap.child(cat+'/'+d[j]+'/URL').val();
+                            amount[j] = c[j];
+                        }
+                        // message.channel.send('message')
+                        msg = `Type : ${category}\n`
+                        for(var i=1;i<=name.length-1;i++)
+                        {
+                            msg = msg + '\n'+name[i]+' = '+amount[i]
+                        } 
+                        if(name.length === 0) return message.channel.send('You have no paint of this type')
+                        message.channel.send('```prolog\n'+msg+'```')
+                    
+                    })
+                },100)
+            })
+        }
+        else
+        {   return message.channel.send('Please Mention which Category : \n\n`Common`\n`Uncommon`\n`Rare`\n`Epic`\n`Legendary`\n`Artefact`')}
+    }
+
+    function Preview_paints(code1,code2)
+    {
+        user = message.author.id
+        if(code1 === 'common'||code1 === 'uncommon'||code1 === 'rare'||code1 === 'epic'||code1 === 'legendary'||code1 === 'artefact')
+        {
+            if(code1 === 'common') num = 61, cat ='C' ;
+            if(code1 === 'uncommon') num = 12, cat ='U';
+            if(code1 === 'rare') num = 10, cat ='R';
+            if(code1 === 'epic') num = 2, cat ='E';
+            if(code1 === 'legendary') num = 2, cat ='L';
+            if(code1 === 'artefact') num = 0, cat ='A';
+
+            Lcat = cat.toLowerCase();
+
+            var c = []
+            var d = []
+            var j = 1;
+            var PaintPreviewRef = firebase.database().ref('paints/database/'+cat)
+            PaintPreviewRef.once('value',function(snap){
+                key = 0
+                for(var i=1;i<=num;i++)
+                {
+                    var a =snap.child(Lcat+i+'/name').val();
+                    var b = Lcat+i;
+                    if(a!= null)
                     {
-                        msg = msg + '\n'+name[i]+' = '+amount[i]
-                    } 
-                    if(name.length === 0) return message.channel.send('You have no paint of this type')
-                    message.channel.send('```prolog\n'+msg+'```')
-                  
-                })
-            },100)
-        })
+                        if(code2 === a)
+                        {   
+                            var key = 1;
+                            var PaintName = a
+                            var PaintID = b;
+                            var PaintURL = snap.child(Lcat+i+'/URL').val();
+                            var UserPreviwRef = firebase.database().ref('users/database/'+user)
+                            UserPreviwRef.once('value',function(snap){
+                                    var PaintAmount = snap.child('paints/'+cat+'/'+PaintID).val()
+                                    if(PaintAmount>0)
+                                    {
+                                        let Embed = new Discord.RichEmbed()
+                                        .setAuthor('Paint Preview')
+                                        .setImage(PaintURL)
+                                        .addField(PaintName,`\n**You have ${PaintAmount} ${PaintName} Paint**`);
+                                        return message.channel.send(Embed);
+                                    }
+                                    else{ return message.channel.send(`**You don't have ${PaintName} Paint**`) }
+                            })
+                        }
+                    }
+                } 
+                setTimeout(function(){if(key === 0)return message.channel.send(`${code2} paint doesn't exist in this type`)},1)
+
+            })
+        }
+        else {return message.channel.send('Please Mention Exisiting Category : \n\n`Common`\n`Uncommon`\n`Rare`\n`Epic`\n`Legendary`\n`Artefact`\n\n***__'+code1+`__***  **type doesn't exist!!**`)}
+
+        
     }
 
  
