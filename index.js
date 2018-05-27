@@ -1,6 +1,5 @@
 //ALMA BOT Code
 const BotPrefix = require("./prefix.json");
-const BotTokenFile = require("./token.json");
 const Discord = require("discord.js");
 
 var firebase = require(`firebase`);
