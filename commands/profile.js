@@ -49,19 +49,19 @@ module.exports.run = async (bot,message,args) => {
                 default:
                         let user = message.author
                         let spaminterval = 30
-                            if (user.aspam) {
-                                if (new Date().getTime() - user.aspam < spaminterval*1000) {
-                                    message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.aspam) / 1000) * 100) / 100) + ' seconds')
+                            if (user.bspam) {
+                                if (new Date().getTime() - user.bspam < spaminterval*1000) {
+                                    message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.bspam) / 1000) * 100) / 100) + ' seconds')
                                     .then(msg => msg.delete(2000));
                                     setTimeout(function(){
                                         message.delete();
                                     },1000)
                                     return;
                                 }
-                                else { user.aspam = new Date().getTime();
+                                else { user.bspam = new Date().getTime();
                                     Display_profile();}
                             }
-                            else { user.aspam = new Date().getTime();
+                            else { user.bspam = new Date().getTime();
                                 Display_profile();}
             }
         },2000);
