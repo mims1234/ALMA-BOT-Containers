@@ -43,7 +43,7 @@ bot.on("ready" , async () => {
 
 //Bot Message input initiation
 bot.on("message", async message => {
-    //if(message.author.bot) return;
+    if(message.author.bot) return;
     if(message.channel.type === "dm") return;
 
 let prefix = BotPrefix.prefix;
@@ -66,4 +66,4 @@ let args = messageArray.slice(1);
     }
 });
 //Key To Run BOT
-bot.login(BotTokenFile.token);
+bot.login(process.env.token);
