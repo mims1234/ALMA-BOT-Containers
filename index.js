@@ -12,8 +12,6 @@ firebase.initializeApp({
 const fs = require("fs");
 const ms = require("ms");
 
-let profile = JSON.parse(fs.readFileSync("./garage.json","utf8"));
-
 const bot =  new Discord.Client();
 bot.commands = new Discord.Collection();
 
