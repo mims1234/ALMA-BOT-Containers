@@ -198,7 +198,7 @@ module.exports.run = async (bot,message,args) => {
                             amount[j] = c[j];
                         }
                         // message.channel.send('message')
-                        msg = `Type : ${category}\n`
+                        msg = `Type : ${code}\n`
                         for(var i=1;i<=name.length-1;i++)
                         {
                             msg = msg + '\n'+name[i]+' = '+amount[i]
