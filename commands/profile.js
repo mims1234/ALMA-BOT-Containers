@@ -9,8 +9,20 @@ module.exports.run = async (bot,message,args) => {
     User = JSON.parse(fs.readFileSync("./SUI.json","utf8"));
     let messageArray = message.content.split(' ');
 
+    a1 = 0;
+    a2 = 0;
+    a3 = 0;
     // 1)Compare if USER_EXIST
-    Current_User = message.member.id;
+    let Player = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    if(!Player) { Current_User = message.member.id; }
+    else 
+    {
+        Current_User = Player.id;
+        a1 = 1;
+        a2 = 1;
+        a3 = 1;
+    }
+    console.log(Current_User);
     var MsgRef = firebase.database().ref('users/database/'+Current_User)
     MsgRef.once('value',function(snap){
         var user_id = snap.child('user_id').val()
@@ -30,8 +42,9 @@ module.exports.run = async (bot,message,args) => {
     })
 
         setTimeout(function(){
-            var info = messageArray[1];
-            var Cinfo2 = messageArray[2];
+            var info = messageArray[1+a1];
+            var Cinfo2 = messageArray[2+a2];
+            console.log(info+'#1 And #2'+Cinfo2)
             if(!info) info = 'nothing'
             if(!Cinfo2) Cinfo2 = 'nothing'
             info2 = Cinfo2.toLowerCase();
@@ -45,7 +58,6 @@ module.exports.run = async (bot,message,args) => {
                                             message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.dspam) / 1000) * 100) / 100) + ' seconds')
                                             .then(msg => msg.delete(2000));
                                             setTimeout(function(){
-                                                message.delete();
                                             },1000)
                                             return;
                                         }
@@ -56,7 +68,7 @@ module.exports.run = async (bot,message,args) => {
                                         Display_paints(info2);}
        
                 break;
-                case 'preview': var info3 = messageArray[3];
+                case 'preview': var info3 = messageArray[3+a3];
                                 if(!info3 || info3 === ' ') return message.channel.send('<paint_name> was missing !?\n\n `a$profile preview <type> <paint_name>`')
                                 var Ninfo3 = info3.toLowerCase()
                                 var Linfo3 = info3[0].toUpperCase()+Ninfo3.slice(1);
@@ -67,7 +79,6 @@ module.exports.run = async (bot,message,args) => {
                                             message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.cspam) / 1000) * 100) / 100) + ' seconds')
                                             .then(msg => msg.delete(2000));
                                             setTimeout(function(){
-                                                message.delete();
                                             },1000)
                                             return;
                                         }
@@ -86,15 +97,14 @@ module.exports.run = async (bot,message,args) => {
                                 message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.bspam) / 1000) * 100) / 100) + ' seconds')
                                 .then(msg => msg.delete(2000));
                                 setTimeout(function(){
-                                    message.delete();
                                 },1000)
                                 return;
                             }
                             else { user.bspam = new Date().getTime();
-                                Display_profile();}
+                                Display_profile(Player);}
                         }
                         else { user.bspam = new Date().getTime();
-                            Display_profile();}
+                            Display_profile(Player);}
             }
         },2000);
     
@@ -121,8 +131,17 @@ module.exports.run = async (bot,message,args) => {
             var PLA = snap.child('crates/PLA').val();
             var DIA = snap.child('crates/DIA').val();
 
-            Uicon = message.member.user.avatarURL;
-            Uname = message.member.displayName;
+            if(Player)
+            {
+                Uicon = Player.user.avatarURL;
+                Uname = Player.displayName;
+            }
+            else
+            {
+                Uicon = message.member.user.avatarURL;
+                Uname = message.member.displayName;
+            }
+            TC = BRZ+SIL+GOL+PLA+DIA;
 
             let Embed = new Discord.RichEmbed()
             .setAuthor(Uname+' Profile')
@@ -147,7 +166,8 @@ module.exports.run = async (bot,message,args) => {
 **Gold** : *${GOL}*
 **Platinum** : *${PLA}*
 **Diamond** : *${DIA}*
--------------------------`);
+-------------------------`)
+            .setFooter('Hints: $profile paints <type> & $profile preview <type> <paint-name>');
 
             return message.channel.send(Embed);
         })
@@ -201,7 +221,7 @@ module.exports.run = async (bot,message,args) => {
                         msg = `Type : ${code}\n`
                         for(var i=1;i<=name.length-1;i++)
                         {
-                            msg = msg + '\n'+name[i]+' = '+amount[i]
+                            msg = msg + '\n'+name[i]+' = '+amount[i]+`   Preview Paint: $profile preview ${code} ${name[i]}`
                         } 
                         if(name.length === 0) return message.channel.send('You have no paint of this type')
                         message.channel.send('```prolog\n'+msg+'```')
