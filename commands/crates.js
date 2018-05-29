@@ -51,7 +51,7 @@ module.exports.run = async (bot,message,args) => {
             {
                 case `Bronze`:   num = 100
                                 code = Math.floor(Math.random() * num)+1
-                                var pin = Crates(50,30,14,5,1,num,code);
+                                var pin = Crates(80,16,3.2,0.64,0.128,num,code);
                                 if(pin != null)
                                 {
                                     var Upin = pin.toUpperCase();
