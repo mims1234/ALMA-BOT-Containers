@@ -44,7 +44,6 @@ module.exports.run = async (bot,message,args) => {
         setTimeout(function(){
             var info = messageArray[1+a1];
             var Cinfo2 = messageArray[2+a2];
-            console.log(info+'#1 And #2'+Cinfo2)
             if(!info) info = 'nothing'
             if(!Cinfo2) Cinfo2 = 'nothing'
             info2 = Cinfo2.toLowerCase();
@@ -115,8 +114,6 @@ module.exports.run = async (bot,message,args) => {
         var UserRef = firebase.database().ref('users/database/'+Current_User);
         UserRef.once('value',function(snap){
             var crys = snap.child('crystals').val();
-            var TC = snap.child('total_crates').val();
-            var TP = snap.child('total_paints').val();
 
             var C = snap.child('paints/C/ct').val();
             var U = snap.child('paints/U/ut').val();
@@ -142,6 +139,7 @@ module.exports.run = async (bot,message,args) => {
                 Uname = message.member.displayName;
             }
             TC = BRZ+SIL+GOL+PLA+DIA;
+            TP = C+U+R+E+L+A;
 
             let Embed = new Discord.RichEmbed()
             .setAuthor(Uname+' Profile')
