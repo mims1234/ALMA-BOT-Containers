@@ -221,7 +221,7 @@ module.exports.run = async (bot,message,args) => {
                         msg = `Type : ${code}\n`
                         for(var i=1;i<=name.length-1;i++)
                         {
-                            msg = msg + '\n'+name[i]+' = '+amount[i]+`   Preview Paint: $profile preview ${code} ${name[i]}`
+                            msg = msg + '\n'+name[i]+' = '+amount[i]
                         } 
                         if(name.length === 0) return message.channel.send('You have no paint of this type')
                         message.channel.send('```prolog\n'+msg+'```')
