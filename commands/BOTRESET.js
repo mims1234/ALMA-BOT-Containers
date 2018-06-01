@@ -9,7 +9,7 @@ module.exports.run = async (bot,message,args) => {
     if(admin != '292675388180791297') return message.channel.send('You do Not have permission to use this command !')
     message.channel.send(':warning: BoT Database ERASED :warning:');
     user = JSON.parse(fs.readFileSync("./SUI.json","utf8"));
-    var ref = firebase.database().ref('bots')
+    var ref = firebase.database().ref('Container/bots')
     messageJSON = user['USER'];
     var payload1 = {}
     var payload2 = {}

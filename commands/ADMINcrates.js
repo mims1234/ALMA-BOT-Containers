@@ -48,7 +48,7 @@ module.exports.run = async (bot,message,args) => {
     function RemoveCrate(Player,userPlayer,code1,code2)
     {
         //message.channel.send(code2+' '+code1+' removed succesfully')
-        var userRef = firebase.database().ref('users/database/'+Player)
+        var userRef = firebase.database().ref('Container/users/database/'+Player)
         userRef.once('value',function(snap){
         var sum = snap.child('crates/'+code1).val();
         sum = sum - code2
@@ -56,7 +56,7 @@ module.exports.run = async (bot,message,args) => {
         if(sum<0) return message.channel.send('Reached 0 Containers , cannot remove '+code2+'more Containers');
         message.channel.send(code2+' '+code1+' removed succesfully')
             //setTimeout(function(){
-                ref = firebase.database().ref('users/database/'+Player)
+                ref = firebase.database().ref('Container/users/database/'+Player)
                 var payload = {}
                 payload['crates/'+code1] = sum;
                 ref.update(payload);
@@ -67,13 +67,13 @@ module.exports.run = async (bot,message,args) => {
     function AddCrate(Player,userPlayer,code1,code2)
     {
         message.channel.send(code2+' '+code1+' added succesfully')
-        var userRef = firebase.database().ref('users/database/'+Player)
+        var userRef = firebase.database().ref('Container/users/database/'+Player)
         userRef.once('value',function(snap){
         var sum = snap.child('crates/'+code1).val();
         sum = sum + code2
         //console.log(sum)
             //setTimeout(function(){
-                ref = firebase.database().ref('users/database/'+Player)
+                ref = firebase.database().ref('Container/users/database/'+Player)
                 var payload = {}
                 payload['crates/'+code1] = sum;
                 ref.update(payload);
@@ -83,7 +83,7 @@ module.exports.run = async (bot,message,args) => {
 
     function ViewCrate(Player,userPlayer)
     {
-        var userRef = firebase.database().ref('users/database/'+Player)
+        var userRef = firebase.database().ref('Container/users/database/'+Player)
         userRef.once('value',function(snap){
             var BRZ = snap.child('crates/BRZ').val()
             var SIL = snap.child('crates/SIL').val()
