@@ -2,11 +2,9 @@
     "USER" :
     {
         "crystals" : 0 ,
-        "total_crates" : 0 ,
-        "total_paints" : 0 ,
         "crates" : 
         {
-            "BRZ" : 200 ,
+            "BRZ" : 0 ,
             "DIA" : 0 ,
             "GOL" : 0 ,
             "SIL" : 0 ,
