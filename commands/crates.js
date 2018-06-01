@@ -73,7 +73,7 @@ module.exports.run = async (bot,message,args) => {
         let newEmbed = new Discord.RichEmbed()
         .setAuthor(`${Lcrate_name} Container`)
         .setColor(HexID)
-        .addField(`Congratulations, You got ${PaintNameU} Paint (${PaintTypeU})`,`**You have ${UserPaint} of these** `)
+        .addField(`Congratulations ${message.member.displayName}, You got ${PaintNameU} Paint (${PaintTypeU})`,`**You have ${UserPaint} of these** `)
         .setImage(PaintURL);
         //.addField(`Paint URL`,`***${Paint_URL}***`);
 
