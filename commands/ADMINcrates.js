@@ -4,37 +4,41 @@ const firebase = require("firebase")
 module.exports.run = async (bot,message,args) => {
     
     admin = message.author.id;
-    if(admin != '292675388180791297') return message.channel.send('You do Not have permission to use this command !')
-    let Player = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-    messageArray = message.content.split(" ");
-    //console.log(messageArray)
-    code = messageArray[2];
-
-    if(!code) return message.channel.send('Pleae Select an Option')
-    switch(code)
+    if(admin === '292675388180791297' || admin === '348491942826606596' || admin === '235398299425701888' )
     {
-        case "view" : ViewCrate(Player.id,Player);
-        break;
-        case "add" :  code1 = messageArray[3];
-                      code2 = parseInt(messageArray[4]);
-                      if(code1 === 'BRZ'||code1 === 'SIL'||code1 === 'GOL'||code1 === 'PLA'||code1 === 'DIA')
-                      {
-                        if(code2 >0 && code2 <=100) AddCrate(Player.id,Player,code1,code2);
-                        else message.channel.send('Range 0 : 100')
-                      }
-                      else message.channel.send('Must be BRZ / SIL / GOL / PLA / DIA');
-        break;
-        case "remove" : code1 = messageArray[3];
+        let Player = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+        messageArray = message.content.split(" ");
+        //console.log(messageArray)
+        code = messageArray[2];
+
+        if(!code) return message.channel.send('Pleae Select an Option')
+        switch(code)
+        {
+            case "view" : ViewCrate(Player.id,Player);
+            break;
+            case "add" :  code1 = messageArray[3];
                         code2 = parseInt(messageArray[4]);
                         if(code1 === 'BRZ'||code1 === 'SIL'||code1 === 'GOL'||code1 === 'PLA'||code1 === 'DIA')
                         {
-                          if(code2 >0 && code2 <=100) RemoveCrate(Player.id,Player,code1,code2);
-                          else message.channel.send('Range 0 : 100')
+                            if(code2 >0 && code2 <=100) AddCrate(Player.id,Player,code1,code2);
+                            else message.channel.send('Range 0 : 100')
                         }
                         else message.channel.send('Must be BRZ / SIL / GOL / PLA / DIA');
-        break;
-        default : message.channel.send("`Reached Default")
+            break;
+            case "remove" : if(admin != '292675388180791297') return message.channel.send('You do Not have permission to use this command !')
+                            code1 = messageArray[3];
+                            code2 = parseInt(messageArray[4]);
+                            if(code1 === 'BRZ'||code1 === 'SIL'||code1 === 'GOL'||code1 === 'PLA'||code1 === 'DIA')
+                            {
+                            if(code2 >0 && code2 <=100) RemoveCrate(Player.id,Player,code1,code2);
+                            else message.channel.send('Range 0 : 100')
+                            }
+                            else message.channel.send('Must be BRZ / SIL / GOL / PLA / DIA');
+            break;
+            default : message.channel.send("`Reached Default")
+        }
     }
+    else{ return message.channel.send('You do Not have permission to use this command !') }
     
     //FUNCTIONS
 

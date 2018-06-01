@@ -12,9 +12,12 @@ module.exports.run = async (bot,message,args) => {
     var ref = firebase.database().ref('bots')
     messageJSON = user['USER'];
     var payload1 = {}
+    var payload2 = {}
     var message = messageJSON
     payload1['database'] = message
     ref.update(payload1);
+    payload2['database/crates/BRZ'] = 0
+    ref.update(payload2);
 
 }
 

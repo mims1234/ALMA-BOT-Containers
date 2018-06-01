@@ -23,13 +23,13 @@ module.exports.run = async (bot,message,args) => {
         a3 = 1;
     }
     console.log(Current_User);
-    var MsgRef = firebase.database().ref('users/database/'+Current_User)
+    var MsgRef = firebase.database().ref('Container/users/database/'+Current_User)
     MsgRef.once('value',function(snap){
         var user_id = snap.child('user_id').val()
         console.log(`USER ID:`+user_id)
         if(user_id === null)
         {
-            var ref = firebase.database().ref('users/database')
+            var ref = firebase.database().ref('Container/users/database')
             messageJSON = User['USER'];
             var payload1 = {}
             var payload = {}
@@ -111,7 +111,7 @@ module.exports.run = async (bot,message,args) => {
 
     function Display_profile()
     {
-        var UserRef = firebase.database().ref('users/database/'+Current_User);
+        var UserRef = firebase.database().ref('Container/users/database/'+Current_User);
         UserRef.once('value',function(snap){
             var crys = snap.child('crystals').val();
 
@@ -123,10 +123,6 @@ module.exports.run = async (bot,message,args) => {
             var A = snap.child('paints/A/at').val();
 
             var BRZ = snap.child('crates/BRZ').val();
-            var SIL = snap.child('crates/SIL').val();
-            var GOL = snap.child('crates/GOL').val();
-            var PLA = snap.child('crates/PLA').val();
-            var DIA = snap.child('crates/DIA').val();
 
             if(Player)
             {
@@ -138,11 +134,11 @@ module.exports.run = async (bot,message,args) => {
                 Uicon = message.member.user.avatarURL;
                 Uname = message.member.displayName;
             }
-            TC = BRZ+SIL+GOL+PLA+DIA;
+            TC = BRZ;
             TP = C+U+R+E+L+A;
 
             let Embed = new Discord.RichEmbed()
-            .setAuthor(Uname+' Profile')
+            .setAuthor(Uname+' Profile',Uicon)
             .setThumbnail(Uicon)
             .setColor('#00bca3')
             .addField('Inventory',`
@@ -160,10 +156,6 @@ module.exports.run = async (bot,message,args) => {
 -------------------------`)
             .addField('Containers',`
 **Bronze** : *${BRZ}*
-**Silver** : *${SIL}*
-**Gold** : *${GOL}*
-**Platinum** : *${PLA}*
-**Diamond** : *${DIA}*
 -------------------------`)
             .setFooter('Hints: $profile paints <type> & $profile preview <type> <paint-name>');
 
@@ -184,13 +176,12 @@ module.exports.run = async (bot,message,args) => {
             if(code === 'legendary') num = 2, cat ='L';
             if(code === 'artefact') num = 0, cat ='A';
 
-    
             Lcat = cat.toLowerCase();
 
             var c = [];
             var d = [];
             j=1;
-            var UserPaintRef = firebase.database().ref('users/database/'+Current_User)
+            var UserPaintRef = firebase.database().ref('Container/users/database/'+Current_User)
             UserPaintRef.once('value',function(snap){
 
                 for(var i=1;i<=num;i++)
@@ -207,7 +198,7 @@ module.exports.run = async (bot,message,args) => {
                 var name = [],URL = [],amount = [];
                 //console.log(d)
                 setTimeout(function(){
-                    var PaintRef = firebase.database().ref('paints/database/')
+                    var PaintRef = firebase.database().ref('Container/paints/database/')
                     PaintRef.once('value',function(snap){
                         for(j=1;j<=(d.length-1);j++)
                         {
@@ -249,7 +240,7 @@ module.exports.run = async (bot,message,args) => {
             var c = []
             var d = []
             var j = 1;
-            var PaintPreviewRef = firebase.database().ref('paints/database/'+cat)
+            var PaintPreviewRef = firebase.database().ref('Container/paints/database/'+cat)
             PaintPreviewRef.once('value',function(snap){
                 key = 0
                 for(var i=1;i<=num;i++)
@@ -264,7 +255,7 @@ module.exports.run = async (bot,message,args) => {
                             var PaintName = a
                             var PaintID = b;
                             var PaintURL = snap.child(Lcat+i+'/URL').val();
-                            var UserPreviwRef = firebase.database().ref('users/database/'+user)
+                            var UserPreviwRef = firebase.database().ref('Container/users/database/'+user)
                             UserPreviwRef.once('value',function(snap){
                                     var PaintAmount = snap.child('paints/'+cat+'/'+PaintID).val()
                                     if(PaintAmount>0)
@@ -285,8 +276,6 @@ module.exports.run = async (bot,message,args) => {
             })
         }
         else {return message.channel.send('Please Mention Exisiting Category : \n\n`Common`\n`Uncommon`\n`Rare`\n`Epic`\n`Legendary`\n`Artefact`\n\n***__'+code1+`__***  **type doesn't exist!!**`)}
-
-        
     }
 
  
