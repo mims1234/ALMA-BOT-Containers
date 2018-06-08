@@ -26,14 +26,14 @@ module.exports.run = async (bot,message,args) => {
     
     // if(code === 'stop') 
 
-    if(message.author.id != '292675388180791297') 
+    //if(message.author.id != '292675388180791297') 
     {
-        let user = message.author
+        let user = message.guild
         let spaminterval = spam
             if (user.r1spam) {
                 if (new Date().getTime() - user.r1spam < (spaminterval)*1000) {
-                    message.channel.send('Spam Alert! Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.r1spam) / 1000) * 100) / 100) + ' seconds')
-                    .then(msg => msg.delete(2000));
+                    message.channel.send('**Guild Rainbow Command Cooldown**\n*Wait for: ' + Math.floor(Math.round((spaminterval - (new Date().getTime() - user.r1spam) / 1000) * 100) / 100) + ' seconds*')
+                    .then(msg => msg.delete(5000));
                     return;
                 }
                 else { user.r1spam = new Date().getTime();
@@ -50,10 +50,10 @@ module.exports.run = async (bot,message,args) => {
                     },500)
                 }
     }
-    else { 
-        Rcolor(mod,key,ColorCode,spam);
-        message.delete().catch();
-     }
+    // else { 
+    //     Rcolor(mod,key,ColorCode,spam);
+    //     message.delete().catch();
+    //  }
     console.log(`${role} Added Rainbow`)
     
     
