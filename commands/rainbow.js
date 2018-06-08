@@ -24,7 +24,7 @@ module.exports.run = async (bot,message,args) => {
     {
         case 'cop': var ColorCode = Object.keys(ColorFile.cop);
         break;
-        case 'ranbom':  var ColorCode = Object.keys(ColorFile.random)
+        case 'rainbow':  var ColorCode = Object.keys(ColorFile.random)
         break;
         case 'alien': var ColorCode = Object.keys(ColorFile.random)
         break;
