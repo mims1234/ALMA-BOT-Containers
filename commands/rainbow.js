@@ -20,7 +20,7 @@ module.exports.run = async (bot,message,args) => {
     if(!gRole) return message.reply("Rainbow Role is Missing in this Server");
 
     if(!code) var ColorCode = Object.keys(ColorFile.random)
-    switch()
+    switch(code)
     {
         case 'cop': var ColorCode = Object.keys(ColorFile.cop);
         break;
