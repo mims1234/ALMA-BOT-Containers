@@ -20,21 +20,19 @@ module.exports.run = async (bot,message,args) => {
     if(!gRole) return message.reply("Rainbow Role is Missing in this Server");
 
     if(!code) var ColorCode = Object.keys(ColorFile.random)
-    switch(code)
+    else
     {
-        case 'cop': var ColorCode = Object.keys(ColorFile.cop);
-        break;
-        case 'rainbow':  var ColorCode = Object.keys(ColorFile.random)
-        break;
-        case 'alien': var ColorCode = Object.keys(ColorFile.random)
-        break;
-        default : return message.channel.send(`${code} type doesn't exist!`);
+        switch(code)
+        {
+            case 'cop': var ColorCode = Object.keys(ColorFile.cop);
+            break;
+            case 'rainbow':  var ColorCode = Object.keys(ColorFile.random)
+            break;
+            case 'alien': var ColorCode = Object.keys(ColorFile.random)
+            break;
+            default : return message.channel.send(`${code} type doesn't exist!`);
+        }
     }
-    if(code === 'cop') var ColorCode = Object.keys(ColorFile.cop)
-    if(code === 'random') var ColorCode = Object.keys(ColorFile.random)
-    if(code === 'alien') var ColorCode = Object.keys(ColorFile.alien)
-    
-    // if(code === 'stop') 
 
     //if(message.author.id != '292675388180791297') 
     {
