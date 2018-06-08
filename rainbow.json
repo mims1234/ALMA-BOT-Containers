@@ -1,0 +1,53 @@
+{
+    "cop" :
+    {
+        "#ff0c00" : true,
+        "#0055ff" : true
+    },
+    
+    "random" :
+    {
+        "#22E4C9" : true,
+        "#19D34E" : true,
+        "#DADA41" : true,
+        "#DE732A" : true,
+        "#D61C1C" : true
+    },
+    
+    "alien" :
+    {
+        "#66DE80":true,
+        "#5BC773":true,
+        "#51B166":true,
+        "#479B59":true,
+        "#3D854C":true,
+        "#336F40":true,
+        "#285833":true,
+        "#1E4226":true,
+        "#66DE80":true,
+        "#75E18C":true,
+        "#84E499":true,
+        "#93E7A6":true,
+        "#A3EBB2":true,
+        "#B2EEBF":true,
+        "#C1F1CC":true,
+        "#D1F5D8":true,
+        "#130000":true,
+        "#2D0000":true,
+        "#460000":true,
+        "#600000":true,
+        "#790202":true,
+        "#931C1C":true,
+        "#AC3535":true,
+        "#C64F4F":true,
+        "#DF6868":true,
+        "#FFE7E7":true,
+        "#FFCECE":true,
+        "#FFB5B5":true,
+        "#FF9B9B":true,
+        "#F98282":true,
+        "#DF6868":true
+
+
+    }
+}
