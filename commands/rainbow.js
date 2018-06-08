@@ -70,7 +70,7 @@ module.exports.run = async (bot,message,args) => {
                 {
                     key = key + 1;
                     Rcolor(mod,key,ColorCode,spam)
-                },1000);
+                },2000);
             }
             else{ return console.log('Rainbow Will Stop soon') }
     }
