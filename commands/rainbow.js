@@ -59,6 +59,7 @@ module.exports.run = async (bot,message,args) => {
     
     function Rcolor(mod,key,ColorCode,spam)
     {
+            if(!ColorCode.length) return;
             path = mod%ColorCode.length
             newrole = gRole.edit({
                 color: ColorCode[path]
